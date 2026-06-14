@@ -365,34 +365,78 @@ Completa el siguiente template en tu notebook:
 
 ```python
 # TEMPLATE DE ARQUITECTURA BIG DATA
-# Completa los campos marcados con [TU RESPUESTA]
 
 arquitectura = {
-    "empresa": "Supermercados [Tu empresa elegida]",
-    "problema_principal": "[Describe el problema de negocio]",
-    
+    "empresa": "Universidad Norbert Wiener",
+    "problema_principal": (
+        "La universidad carece de una arquitectura de datos consolidada: los sistemas de matrícula, "
+        "pagos de pensiones, plataforma LMS, ERP académico y redes sociales institucionales generan "
+        "datos en silos completamente desconectados. Esto impide detectar fraudes en pagos en tiempo "
+        "real, personalizar trayectorias académicas por estudiante y analizar la satisfacción de la "
+        "comunidad universitaria. La ausencia de arquitecturas bien establecidas obliga a depender de "
+        "terceros o proveedores externos para reportes y análisis que podrían gestionarse internamente, "
+        "además de incumplir parámetros de seguridad por falta de trazabilidad centralizada."
+    ),
+
     "fuentes_de_datos": {
-        "estructuradas": ["[ej: Base de datos de ventas POS]", "[...]"],
-        "semi_estructuradas": ["[ej: API de pagos Yape]", "[...]"],
-        "no_estructuradas": ["[ej: Videos de cámaras de seguridad]", "[...]"]
+        "estructuradas": [
+            "Base de datos de matrícula: registros de estudiantes, cursos, notas y asistencia",
+            "Sistema de pagos de pensiones y deudas académicas (ERP universitario)",
+            "Registros de uso de biblioteca: préstamos, accesos a bases de datos académicas"
+        ],
+        "semi_estructuradas": [
+            "Logs de actividad en el LMS (Moodle/Canvas): accesos, tiempos de sesión, entregas en JSON",
+            "Respuestas JSON de plataformas de pago (Visa, Mastercard, transferencias interbancarias)",
+            "Encuestas de satisfacción estudiantil en formato estructurado flexible"
+        ],
+        "no_estructuradas": [
+            "Comentarios y reseñas en redes sociales sobre la universidad (Twitter/X, Facebook, Google Maps)",
+            "Grabaciones de clases virtuales y videoconferencias académicas",
+            "Documentos de trabajos de investigación y tesis en PDF"
+        ]
     },
-    
+
     "estimacion_volumen": {
-        "registros_por_dia": "[Tu cálculo]",
-        "tamaño_estimado_por_año": "[Tu cálculo en GB/TB]"
+        "registros_por_dia": (
+            "~500,000 eventos diarios: accesos LMS, transacciones de pago, "
+            "registros de asistencia y actividad en plataformas digitales para una población "
+            "de ~15,000 estudiantes activos"
+        ),
+        "tamaño_estimado_por_año": (
+            "~500 GB/año en datos estructurados (matrícula, pagos, notas); "
+            "~20 TB/año sumando grabaciones de clases, investigaciones en PDF y logs de plataformas; "
+            "total estimado: 20-25 TB/año"
+        )
     },
-    
+
     "tecnologias_propuestas": {
-        "ingesta": "[Herramienta para capturar datos en tiempo real]",
-        "almacenamiento": "[Herramienta para guardar los datos]",
-        "procesamiento": "[Herramienta para procesar/analizar]",
-        "visualizacion": "[Herramienta para presentar resultados]"
+        "ingesta": (
+            "Apache Kafka — captura eventos del LMS y plataformas de pago en tiempo real; "
+            "permite procesar alertas de fraude en pagos y comportamiento académico anómalo sin demora"
+        ),
+        "almacenamiento": (
+            "AWS S3 como Data Lake (capas raw y curada) para centralizar todos los datos institucionales; "
+            "Delta Lake para versionado; PostgreSQL / Amazon Redshift como Data Warehouse analítico"
+        ),
+        "procesamiento": (
+            "Apache Spark para procesamiento batch (reportes académicos, entrenamiento de modelos ML); "
+            "Spark Streaming para detección de fraude en pagos en tiempo real; "
+            "Python/scikit-learn para modelos de riesgo académico (deserción) y recomendación de cursos"
+        ),
+        "visualizacion": (
+            "Apache Superset para dashboards operacionales de Rectorado y áreas académicas; "
+            "Power BI para reportes de gestión; "
+            "Grafana para monitoreo de pipelines de datos y alertas en tiempo real"
+        )
     },
-    
+
     "casos_uso_principales": [
-        "[Caso 1: ej Detección de fraude en tiempo real]",
-        "[Caso 2: ...]",
-        "[Caso 3: ...]"
+        "Detección de fraude en pagos en tiempo real: el modelo ML evalúa cada transacción de pensión "
+        "o matrícula en < 200 ms y genera alerta si el patrón supera el umbral de riesgo definido",
+        "Predicción de deserción estudiantil: analiza comportamiento en el LMS, notas y asistencia "
+        "para identificar estudiantes en riesgo y activar intervención temprana del área de bienestar",
+        "Análisis de sentimiento institucional: monitoreo continuo de menciones en redes sociales "
+        "para detectar crisis de reputación o tendencias de insatisfacción que requieran atención"
     ]
 }
 
@@ -414,18 +458,34 @@ Sube a tu repositorio GitHub los siguientes archivos:
 
 ```markdown
 # Lab Semana 1 — Big Data DD283
-**Estudiante**: Tu Nombre  
-**Fecha**: 
-**Empresa del proyecto**: 
+**Estudiante**: Raúl Ferreyra  
+**Fecha**: 14 de junio de 2026  
+**Empresa del proyecto**: Universidad Norbert Wiener
 
 ## ¿Qué aprendí?
-[Tu reflexión — mínimo 3 oraciones]
+A través de este laboratorio pude confirmar y formalizar conceptualmente lo que he observado durante
+mis 13 años de experiencia en el sector: la diferencia entre gestionar datos a escala operacional y
+hacerlo a escala Big Data no es solo cuantitativa sino cualitativa. Aprendí a calcular las métricas
+de las 5 V's sobre datos reales, a transformar estructuras JSON anidadas en DataFrames tabulares para
+análisis, y a realizar análisis de sentimiento básico sin depender de librerías especializadas. El
+ejercicio de diseñar una arquitectura Big Data completa fue especialmente valioso porque obliga a
+articular formalmente decisiones que en la práctica muchas veces se toman de manera empírica.
 
 ## ¿Qué fue lo más difícil?
-[Tu reflexión]
+El mayor desafío no fue técnico sino conceptual: en la Parte 5, la tentación es proponer un stack
+tecnológico por familiaridad más que por idoneidad al problema específico. Ejercitar la justificación
+de cada herramienta (Kafka para baja latencia, Spark para batch distribuido, Delta Lake para ACID en
+Data Lakes) en función del caso de uso requiere un pensamiento arquitectónico que va más allá de
+conocer las librerías.
 
 ## ¿Cómo aplica en mi empresa actual?
-[Tu reflexión — mínimo 2 oraciones]
+En mi posición anterior en la Universidad Norbert Wiener, la organización carecía de arquitecturas de
+datos bien establecidas: los datos de distintas áreas (académica, financiera, RRHH, operaciones)
+vivían en silos sin gobierno ni trazabilidad, lo que llevaba a incumplir parámetros de seguridad y a
+depender de terceros o proveedores externos para tareas que podían resolverse internamente. Este
+laboratorio me da el marco conceptual y el lenguaje técnico para proponer arquitecturas Big Data
+robustas que ataquen exactamente ese tipo de problemática, alineando seguridad, escalabilidad y
+generación de valor desde el diseño.
 ```
 
 ---
